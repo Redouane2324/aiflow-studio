@@ -1,6 +1,7 @@
 {
   "name": "aiflow-studio",
   "version": "1.0.0",
+  "description": "AI-powered business automation platform",
   "private": true,
   "scripts": {
     "start": "node server.js",
