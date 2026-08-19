@@ -3,9 +3,14 @@ const T = document.getElementById("title");
 
 const API = "/api";
 
+/* =========================
+   PAGE VIEWS
+========================= */
+
 const V = {
 
   overview() {
+
     T.textContent = "Good evening, Redouane.";
 
     C.innerHTML = `
@@ -27,7 +32,9 @@ const V = {
         <div class="card">
           <small>ACTIVE LEADS</small>
           <div class="metric" id="leadMetric">...</div>
-          <div class="trend">↑ Live from PostgreSQL</div>
+          <div class="trend">
+            ↑ Live from PostgreSQL
+          </div>
         </div>
 
         <div class="card">
@@ -57,15 +64,20 @@ const V = {
 
           <div class="bars">
             ${[
-              35, 62, 48, 76, 58, 91,
-              70, 82, 64, 96, 78, 88
-            ].map(
-              x => `<div class="bar" style="height:${x}%"></div>`
-            ).join("")}
+              35, 62, 48, 76,
+              58, 91, 70, 82,
+              64, 96, 78, 88
+            ].map(height => `
+              <div
+                class="bar"
+                style="height:${height}%"
+              ></div>
+            `).join("")}
           </div>
         </div>
 
         <div class="card">
+
           <h3>Recent activity</h3>
 
           <div class="item">
@@ -92,6 +104,10 @@ const V = {
   },
 
 
+  /* =========================
+     LEADS
+  ========================= */
+
   async leads() {
 
     T.textContent = "Leads";
@@ -115,6 +131,7 @@ const V = {
 
           <input
             id="ln"
+            type="text"
             placeholder="Name"
             required
           >
@@ -126,28 +143,47 @@ const V = {
             required
           >
 
-          <button class="btn" type="submit">
+          <button
+            class="btn"
+            type="submit"
+          >
             Add lead
           </button>
 
         </form>
 
-        <div id="leadMessage"></div>
+        <div
+          id="leadMessage"
+          style="margin-top:12px"
+        ></div>
 
-        <div id="lt" style="margin-top:18px">
+        <div
+          id="lt"
+          style="margin-top:20px"
+        >
           Loading leads...
         </div>
 
       </div>
     `;
 
-    document
-      .getElementById("leadForm")
-      .addEventListener("submit", addLead);
+    const form =
+      document.getElementById("leadForm");
+
+    if (form) {
+      form.addEventListener(
+        "submit",
+        addLead
+      );
+    }
 
     await loadLeads();
   },
 
+
+  /* =========================
+     AI CHAT
+  ========================= */
 
   chat() {
 
@@ -197,11 +233,21 @@ const V = {
       </div>
     `;
 
-    document
-      .getElementById("chatForm")
-      .addEventListener("submit", chat);
+    const form =
+      document.getElementById("chatForm");
+
+    if (form) {
+      form.addEventListener(
+        "submit",
+        chat
+      );
+    }
   },
 
+
+  /* =========================
+     AUTOMATIONS
+  ========================= */
 
   automations() {
 
@@ -211,11 +257,15 @@ const V = {
       <div class="hero">
 
         <div>
-          <h2>Workflow automation</h2>
+
+          <h2>
+            Workflow automation
+          </h2>
 
           <div class="muted">
             Build repeatable business processes with AI.
           </div>
+
         </div>
 
         <button
@@ -234,29 +284,35 @@ const V = {
           "EMAIL FOLLOW-UP",
           "SUPPORT TRIAGE",
           "CONTENT ENGINE"
-        ].map(
-          (x, i) => `
-            <div class="card">
+        ].map((name, index) => `
 
-              <small>${x}</small>
+          <div class="card">
 
-              <div class="metric">
-                ${i === 2 ? "Paused" : "Active"}
-              </div>
+            <small>
+              ${name}
+            </small>
 
-              <p class="muted">
-                Automated business workflow
-                ready for client customization.
-              </p>
-
+            <div class="metric">
+              ${index === 2 ? "Paused" : "Active"}
             </div>
-          `
-        ).join("")}
+
+            <p class="muted">
+              Automated business workflow
+              ready for client customization.
+            </p>
+
+          </div>
+
+        `).join("")}
 
       </div>
     `;
   },
 
+
+  /* =========================
+     ANALYTICS
+  ========================= */
 
   analytics() {
 
@@ -266,11 +322,15 @@ const V = {
       <div class="hero">
 
         <div>
-          <h2>Business analytics</h2>
+
+          <h2>
+            Business analytics
+          </h2>
 
           <div class="muted">
             Client-facing performance overview.
           </div>
+
         </div>
 
       </div>
@@ -282,23 +342,25 @@ const V = {
           ["RESPONSE TIME", "2.4m"],
           ["AI RESOLUTION", "74%"],
           ["AUTOMATION SAVINGS", "31h"]
-        ].map(
-          x => `
-            <div class="card">
+        ].map(item => `
 
-              <small>${x[0]}</small>
+          <div class="card">
 
-              <div class="metric">
-                ${x[1]}
-              </div>
+            <small>
+              ${item[0]}
+            </small>
 
-              <div class="trend">
-                ↑ Improving
-              </div>
-
+            <div class="metric">
+              ${item[1]}
             </div>
-          `
-        ).join("")}
+
+            <div class="trend">
+              ↑ Improving
+            </div>
+
+          </div>
+
+        `).join("")}
 
       </div>
     `;
@@ -327,134 +389,228 @@ function show(page) {
   if (V[page]) {
     V[page]();
   }
-
 }
 
 
 /* =========================
-   LOAD LEADS
+   GET LEADS
 ========================= */
 
 async function loadLeads() {
 
-  const table = document.getElementById("lt");
+  const table =
+    document.getElementById("lt");
 
-  if (!table) return;
+  if (!table) {
+    return;
+  }
 
-  table.innerHTML = "Loading leads...";
+  table.innerHTML = `
+    <div class="muted">
+      Loading leads...
+    </div>
+  `;
 
   try {
 
-    const response = await fetch(
-      `${API}/leads`
-    );
+    const response =
+      await fetch(
+        `${API}/leads`,
+        {
+          cache: "no-store"
+        }
+      );
 
     if (!response.ok) {
+
       throw new Error(
-        "Unable to load leads"
+        `HTTP ${response.status}`
       );
+
     }
 
-    const leads = await response.json();
+    const leads =
+      await response.json();
 
-    if (!leads.length) {
+    console.log(
+      "AIFlow PostgreSQL Leads:",
+      leads
+    );
+
+    if (
+      !Array.isArray(leads) ||
+      leads.length === 0
+    ) {
 
       table.innerHTML = `
-        <div class="muted">
-          No leads yet.
+        <div class="card">
+          <div class="muted">
+            No leads found.
+          </div>
         </div>
       `;
 
       return;
     }
 
+
     table.innerHTML = `
-      <table class="table">
 
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Status</th>
-          <th>Source</th>
-          <th>Date</th>
-        </tr>
+      <div style="overflow-x:auto">
 
-        ${leads.map(
-          lead => `
+        <table class="table">
+
+          <thead>
+
             <tr>
 
-              <td>
-                ${esc(lead.name)}
-              </td>
+              <th>
+                Name
+              </th>
 
-              <td>
-                ${esc(lead.email)}
-              </td>
+              <th>
+                Email
+              </th>
 
-              <td>
-                <span class="badge">
-                  ${esc(lead.status)}
-                </span>
-              </td>
+              <th>
+                Status
+              </th>
 
-              <td>
-                ${esc(lead.source)}
-              </td>
+              <th>
+                Source
+              </th>
 
-              <td>
-                ${formatDate(lead.created_at)}
-              </td>
+              <th>
+                Created
+              </th>
 
             </tr>
-          `
-        ).join("")}
 
-      </table>
+          </thead>
+
+          <tbody>
+
+            ${leads.map(lead => `
+
+              <tr>
+
+                <td>
+                  <strong>
+                    ${esc(lead.name)}
+                  </strong>
+                </td>
+
+                <td>
+                  ${esc(lead.email)}
+                </td>
+
+                <td>
+
+                  <span class="badge">
+                    ${esc(
+                      lead.status || "New"
+                    )}
+                  </span>
+
+                </td>
+
+                <td>
+                  ${esc(
+                    lead.source || "Website"
+                  )}
+                </td>
+
+                <td>
+                  ${formatDate(
+                    lead.created_at
+                  )}
+                </td>
+
+              </tr>
+
+            `).join("")}
+
+          </tbody>
+
+        </table>
+
+      </div>
+
     `;
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "AIFlow Leads Error:",
+      error
+    );
 
     table.innerHTML = `
-      <div class="muted">
-        Unable to load leads.
-        Please refresh the page.
+
+      <div class="card">
+
+        <div
+          style="color:#ff7b7b"
+        >
+          Unable to load leads.
+        </div>
+
+        <div class="muted">
+          Please refresh the page.
+        </div>
+
       </div>
+
     `;
   }
-
 }
 
 
 /* =========================
-   LEAD METRIC
+   LEAD COUNT
 ========================= */
 
 async function loadLeadMetric() {
 
   const metric =
-    document.getElementById("leadMetric");
+    document.getElementById(
+      "leadMetric"
+    );
 
-  if (!metric) return;
+  if (!metric) {
+    return;
+  }
 
   try {
 
     const response =
-      await fetch(`${API}/leads`);
+      await fetch(
+        `${API}/leads`,
+        {
+          cache: "no-store"
+        }
+      );
+
+    if (!response.ok) {
+      throw new Error(
+        "Lead API unavailable"
+      );
+    }
 
     const leads =
       await response.json();
 
     metric.textContent =
-      leads.length;
+      Array.isArray(leads)
+        ? leads.length
+        : 0;
 
   } catch (error) {
 
+    console.error(error);
+
     metric.textContent = "—";
-
   }
-
 }
 
 
@@ -466,18 +622,35 @@ async function addLead(event) {
 
   event.preventDefault();
 
-  const name =
-    document.getElementById("ln").value.trim();
+  const nameInput =
+    document.getElementById("ln");
 
-  const email =
-    document.getElementById("le").value.trim();
+  const emailInput =
+    document.getElementById("le");
 
   const message =
-    document.getElementById("leadMessage");
+    document.getElementById(
+      "leadMessage"
+    );
+
+  const name =
+    nameInput.value.trim();
+
+  const email =
+    emailInput.value.trim();
+
 
   if (!name || !email) {
+
+    message.innerHTML = `
+      <div style="color:#ff7b7b">
+        Please enter name and email.
+      </div>
+    `;
+
     return;
   }
+
 
   message.innerHTML = `
     <div class="muted">
@@ -485,38 +658,47 @@ async function addLead(event) {
     </div>
   `;
 
+
   try {
 
-    const response = await fetch(
-      `${API}/leads`,
-      {
-        method: "POST",
+    const response =
+      await fetch(
+        `${API}/leads`,
+        {
+          method: "POST",
 
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
 
-        body: JSON.stringify({
-          name,
-          email,
-          source: "Website"
-        })
-      }
-    );
+          body: JSON.stringify({
+            name,
+            email,
+            source: "Website"
+          })
+        }
+      );
+
 
     const data =
       await response.json();
 
+
     if (!response.ok) {
+
       throw new Error(
-        data.error || "Unable to create lead"
+        data.error ||
+        "Unable to create lead"
       );
+
     }
+
 
     document
       .getElementById("leadForm")
       .reset();
+
 
     message.innerHTML = `
       <div class="trend">
@@ -524,11 +706,16 @@ async function addLead(event) {
       </div>
     `;
 
+
     await loadLeads();
+
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "Create lead error:",
+      error
+    );
 
     message.innerHTML = `
       <div style="color:#ff7b7b">
@@ -536,7 +723,6 @@ async function addLead(event) {
       </div>
     `;
   }
-
 }
 
 
@@ -551,125 +737,180 @@ async function chat(event) {
   const input =
     document.getElementById("ci");
 
-  const message =
-    input.value.trim();
-
-  if (!message) return;
-
   const box =
     document.getElementById("msgs");
 
+  const message =
+    input.value.trim();
+
+
+  if (!message) {
+    return;
+  }
+
+
   box.innerHTML += `
+
     <div class="msg user">
       ${esc(message)}
     </div>
+
   `;
+
 
   input.value = "";
 
-  box.innerHTML += `
-    <div class="msg" id="aiTyping">
-      AI is thinking...
-    </div>
-  `;
+
+  const typing =
+    document.createElement("div");
+
+  typing.className = "msg";
+
+  typing.id = "aiTyping";
+
+  typing.textContent =
+    "AI is thinking...";
+
+  box.appendChild(typing);
+
 
   box.scrollTop =
     box.scrollHeight;
 
+
   try {
 
-    const response = await fetch(
-      `${API}/chat`,
-      {
-        method: "POST",
+    const response =
+      await fetch(
+        `${API}/chat`,
+        {
+          method: "POST",
 
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
 
-        body: JSON.stringify({
-          message
-        })
-      }
-    );
+          body: JSON.stringify({
+            message
+          })
+        }
+      );
+
 
     const data =
       await response.json();
 
-    const typing =
-      document.getElementById("aiTyping");
 
-    if (typing) {
-      typing.remove();
+    const typingElement =
+      document.getElementById(
+        "aiTyping"
+      );
+
+    if (typingElement) {
+      typingElement.remove();
     }
 
+
+    const reply =
+      data.reply ||
+      "No AI response received.";
+
+
     box.innerHTML += `
+
       <div class="msg">
-        ${esc(data.reply || "No response")}
+        ${esc(reply)}
       </div>
+
     `;
+
 
   } catch (error) {
 
-    const typing =
-      document.getElementById("aiTyping");
+    const typingElement =
+      document.getElementById(
+        "aiTyping"
+      );
 
-    if (typing) {
-      typing.remove();
+    if (typingElement) {
+      typingElement.remove();
     }
 
+
     box.innerHTML += `
+
       <div class="msg">
         AI service temporarily unavailable.
       </div>
+
     `;
+
   }
+
 
   box.scrollTop =
     box.scrollHeight;
-
 }
 
 
 /* =========================
-   HELPERS
+   DATE FORMAT
 ========================= */
 
 function formatDate(date) {
 
-  if (!date) return "—";
+  if (!date) {
+    return "—";
+  }
 
-  return new Date(date)
-    .toLocaleDateString(
-      "en-US",
-      {
-        year: "numeric",
-        month: "short",
-        day: "numeric"
+  try {
+
+    return new Date(date)
+      .toLocaleDateString(
+        "en-US",
+        {
+          year: "numeric",
+          month: "short",
+          day: "numeric"
+        }
+      );
+
+  } catch {
+
+    return "—";
+
+  }
+}
+
+
+/* =========================
+   SECURITY
+========================= */
+
+function esc(value) {
+
+  return String(value ?? "")
+    .replace(
+      /[&<>"']/g,
+      character => {
+
+        const map = {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;"
+        };
+
+        return map[character];
       }
     );
 }
 
 
-function esc(value) {
-
-  return String(value)
-    .replace(
-      /[&<>"']/g,
-      character => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-      }[character])
-    );
-}
-
-
 /* =========================
-   SIDEBAR
+   SIDEBAR BUTTONS
 ========================= */
 
 document
@@ -679,7 +920,11 @@ document
     button.addEventListener(
       "click",
       () => {
-        show(button.dataset.page);
+
+        show(
+          button.dataset.page
+        );
+
       }
     );
 
@@ -687,7 +932,7 @@ document
 
 
 /* =========================
-   START APP
+   START APPLICATION
 ========================= */
 
 show("overview");
