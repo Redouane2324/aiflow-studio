@@ -1,7 +1,9 @@
 <!doctype html>
+
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -20,64 +22,74 @@
     rel="stylesheet"
     href="/style.css"
   >
+
 </head>
+
 
 <body>
 
-  <!-- Mobile menu button -->
+
+  <!-- MOBILE MENU -->
+
   <button
-    class="mobile-menu"
     id="mobileMenu"
+    class="mobile-menu"
     aria-label="Open navigation"
   >
     ☰
   </button>
 
 
-  <!-- Sidebar -->
+  <!-- SIDEBAR -->
+
   <aside id="sidebar">
 
     <div class="brand">
       ✦ AIFlow
     </div>
 
+
     <nav>
 
       <button
-        data-page="overview"
         class="nav-button"
+        data-page="overview"
       >
         <span>⌂</span>
         <span>Overview</span>
       </button>
 
+
       <button
-        data-page="chat"
         class="nav-button"
+        data-page="chat"
       >
         <span>◉</span>
         <span>AI Chat</span>
       </button>
 
+
       <button
-        data-page="leads"
         class="nav-button"
+        data-page="leads"
       >
         <span>♢</span>
         <span>Leads</span>
       </button>
 
+
       <button
-        data-page="automations"
         class="nav-button"
+        data-page="automations"
       >
         <span>⚡</span>
         <span>Automations</span>
       </button>
 
+
       <button
-        data-page="analytics"
         class="nav-button"
+        data-page="analytics"
       >
         <span>▥</span>
         <span>Analytics</span>
@@ -88,9 +100,13 @@
 
     <div class="pro">
 
-      <small>PRO WORKSPACE</small>
+      <small>
+        PRO WORKSPACE
+      </small>
 
-      <b>AI Automation Suite</b>
+      <strong>
+        AI Automation Suite
+      </strong>
 
       <small>
         Ready for clients
@@ -101,7 +117,8 @@
   </aside>
 
 
-  <!-- Main application -->
+  <!-- MAIN -->
+
   <main>
 
     <header>
@@ -118,9 +135,10 @@
 
       </div>
 
-      <span class="system-status">
+
+      <div class="system-status">
         ● All systems operational
-      </span>
+      </div>
 
     </header>
 
@@ -128,50 +146,6 @@
     <section id="content"></section>
 
   </main>
-
-
-  <!-- Mobile menu script -->
-  <script>
-
-    const mobileMenu =
-      document.getElementById("mobileMenu");
-
-    const sidebar =
-      document.getElementById("sidebar");
-
-
-    mobileMenu.addEventListener(
-      "click",
-      () => {
-
-        sidebar.classList.toggle(
-          "mobile-open"
-        );
-
-      }
-    );
-
-
-    document
-      .querySelectorAll(
-        "#sidebar button"
-      )
-      .forEach(button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            sidebar.classList.remove(
-              "mobile-open"
-            );
-
-          }
-        );
-
-      });
-
-  </script>
 
 
   <script src="/app.js"></script>
