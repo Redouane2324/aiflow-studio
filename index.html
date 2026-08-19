@@ -1,1 +1,181 @@
-<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AIFlow Studio</title><link rel="stylesheet" href="/style.css"></head><body><aside><div class="brand">✦ AIFlow</div><button data-page="overview">⌂ Overview</button><button data-page="chat">◉ AI Chat</button><button data-page="leads">♢ Leads</button><button data-page="automations">⚡ Automations</button><button data-page="analytics">▥ Analytics</button><div class="pro">PRO WORKSPACE<br><b>AI Automation Suite</b><small>Ready for clients</small></div></aside><main><header><div><small>AI AUTOMATION PLATFORM</small><h1 id="title">Good evening, Redouane.</h1></div><span>● All systems operational　 R</span></header><section id="content"></section></main><script src="/app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="AIFlow Studio - AI-powered business automation platform"
+  >
+
+  <title>AIFlow Studio</title>
+
+  <link
+    rel="stylesheet"
+    href="/style.css"
+  >
+</head>
+
+<body>
+
+  <!-- Mobile menu button -->
+  <button
+    class="mobile-menu"
+    id="mobileMenu"
+    aria-label="Open navigation"
+  >
+    ☰
+  </button>
+
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+
+    <div class="brand">
+      ✦ AIFlow
+    </div>
+
+    <nav>
+
+      <button
+        data-page="overview"
+        class="nav-button"
+      >
+        <span>⌂</span>
+        <span>Overview</span>
+      </button>
+
+      <button
+        data-page="chat"
+        class="nav-button"
+      >
+        <span>◉</span>
+        <span>AI Chat</span>
+      </button>
+
+      <button
+        data-page="leads"
+        class="nav-button"
+      >
+        <span>♢</span>
+        <span>Leads</span>
+      </button>
+
+      <button
+        data-page="automations"
+        class="nav-button"
+      >
+        <span>⚡</span>
+        <span>Automations</span>
+      </button>
+
+      <button
+        data-page="analytics"
+        class="nav-button"
+      >
+        <span>▥</span>
+        <span>Analytics</span>
+      </button>
+
+    </nav>
+
+
+    <div class="pro">
+
+      <small>PRO WORKSPACE</small>
+
+      <b>AI Automation Suite</b>
+
+      <small>
+        Ready for clients
+      </small>
+
+    </div>
+
+  </aside>
+
+
+  <!-- Main application -->
+  <main>
+
+    <header>
+
+      <div>
+
+        <small>
+          AI AUTOMATION PLATFORM
+        </small>
+
+        <h1 id="title">
+          Good evening, Redouane.
+        </h1>
+
+      </div>
+
+      <span class="system-status">
+        ● All systems operational
+      </span>
+
+    </header>
+
+
+    <section id="content"></section>
+
+  </main>
+
+
+  <!-- Mobile menu script -->
+  <script>
+
+    const mobileMenu =
+      document.getElementById("mobileMenu");
+
+    const sidebar =
+      document.getElementById("sidebar");
+
+
+    mobileMenu.addEventListener(
+      "click",
+      () => {
+
+        sidebar.classList.toggle(
+          "mobile-open"
+        );
+
+      }
+    );
+
+
+    document
+      .querySelectorAll(
+        "#sidebar button"
+      )
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            sidebar.classList.remove(
+              "mobile-open"
+            );
+
+          }
+        );
+
+      });
+
+  </script>
+
+
+  <script src="/app.js"></script>
+
+</body>
+
+</html>
