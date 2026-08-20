@@ -3,127 +3,209 @@ const T = document.getElementById("title");
 
 const API = "/api";
 
+
 /* =========================
-   PAGE VIEWS
+   VIEWS
 ========================= */
 
 const V = {
 
+
   overview() {
 
-    T.textContent = "Good evening, Redouane.";
+    T.textContent =
+      "Good evening, Redouane.";
 
     C.innerHTML = `
+
       <div class="hero">
+
         <div>
-          <h2>Your automation command center</h2>
+
+          <h2>
+            Your automation command center
+          </h2>
+
           <div class="muted">
-            Monitor AI workflows, leads and business activity.
+            Monitor AI workflows,
+            leads and business activity.
           </div>
+
         </div>
 
-        <button class="btn" onclick="show('chat')">
+        <button
+          class="btn"
+          onclick="show('chat')"
+        >
           Open AI Chat
         </button>
+
       </div>
+
 
       <div class="grid">
 
         <div class="card">
-          <small>ACTIVE LEADS</small>
-          <div class="metric" id="leadMetric">...</div>
+
+          <small>
+            ACTIVE LEADS
+          </small>
+
+          <div
+            class="metric"
+            id="leadMetric"
+          >
+            ...
+          </div>
+
           <div class="trend">
             ↑ Live from PostgreSQL
           </div>
+
         </div>
 
-        <div class="card">
-          <small>AUTOMATIONS</small>
-          <div class="metric">12</div>
-          <div class="trend">↑ 4 running</div>
-        </div>
 
         <div class="card">
-          <small>AI TASKS</small>
-          <div class="metric">1,284</div>
-          <div class="trend">↑ 32.1%</div>
+
+          <small>
+            AUTOMATIONS
+          </small>
+
+          <div class="metric">
+            12
+          </div>
+
+          <div class="trend">
+            ↑ 4 running
+          </div>
+
         </div>
 
+
         <div class="card">
-          <small>CONVERSION</small>
-          <div class="metric">8.7%</div>
-          <div class="trend">↑ 1.2%</div>
+
+          <small>
+            AI TASKS
+          </small>
+
+          <div class="metric">
+            1,284
+          </div>
+
+          <div class="trend">
+            ↑ 32.1%
+          </div>
+
+        </div>
+
+
+        <div class="card">
+
+          <small>
+            CONVERSION
+          </small>
+
+          <div class="metric">
+            8.7%
+          </div>
+
+          <div class="trend">
+            ↑ 1.2%
+          </div>
+
         </div>
 
       </div>
+
 
       <div class="two">
 
         <div class="card">
-          <h3>AI activity</h3>
+
+          <h3>
+            AI activity
+          </h3>
 
           <div class="bars">
+
             ${[
-              35, 62, 48, 76,
-              58, 91, 70, 82,
-              64, 96, 78, 88
-            ].map(height => `
+              35,62,48,76,
+              58,91,70,82,
+              64,96,78,88
+            ].map(value => `
               <div
                 class="bar"
-                style="height:${height}%"
+                style="height:${value}%"
               ></div>
             `).join("")}
+
           </div>
+
         </div>
+
 
         <div class="card">
 
-          <h3>Recent activity</h3>
+          <h3>
+            Recent activity
+          </h3>
 
           <div class="item">
             AI lead qualification
-            <span class="badge">Completed</span>
+            <span class="badge">
+              Completed
+            </span>
           </div>
 
           <div class="item">
             Website chatbot
-            <span class="badge">Running</span>
+            <span class="badge">
+              Running
+            </span>
           </div>
 
           <div class="item">
             Email follow-up
-            <span class="badge">Queued</span>
+            <span class="badge">
+              Queued
+            </span>
           </div>
 
         </div>
 
       </div>
+
     `;
 
+
     loadLeadMetric();
+
   },
 
-
-  /* =========================
-     LEADS
-  ========================= */
 
   async leads() {
 
     T.textContent = "Leads";
 
+
     C.innerHTML = `
+
       <div class="hero">
 
         <div>
-          <h2>Lead management</h2>
+
+          <h2>
+            Lead management
+          </h2>
 
           <div class="muted">
             Capture and organize potential customers.
           </div>
+
         </div>
 
       </div>
+
 
       <div class="card">
 
@@ -152,10 +234,12 @@ const V = {
 
         </form>
 
+
         <div
           id="leadMessage"
           style="margin-top:12px"
         ></div>
+
 
         <div
           id="lt"
@@ -165,44 +249,49 @@ const V = {
         </div>
 
       </div>
+
     `;
 
-    const form =
-      document.getElementById("leadForm");
 
-    if (form) {
-      form.addEventListener(
+    document
+      .getElementById("leadForm")
+      .addEventListener(
         "submit",
         addLead
       );
-    }
+
 
     await loadLeads();
+
   },
 
 
-  /* =========================
-     AI CHAT
-  ========================= */
-
   chat() {
 
-    T.textContent = "AI Chat";
+    T.textContent =
+      "AI Chat";
+
 
     C.innerHTML = `
+
       <div class="hero">
 
         <div>
-          <h2>Business AI Assistant</h2>
+
+          <h2>
+            Business AI Assistant
+          </h2>
 
           <div class="muted">
             AI assistant for business automation.
           </div>
+
         </div>
 
       </div>
 
-      <div class="card chat">
+
+      <div class="card">
 
         <div
           class="messages"
@@ -210,11 +299,13 @@ const V = {
         >
 
           <div class="msg">
-            Hello! Ask me to qualify a lead,
-            draft an email, or suggest an automation.
+            Hello! Ask me to qualify
+            a lead, draft an email,
+            or suggest an automation.
           </div>
 
         </div>
+
 
         <form id="chatForm">
 
@@ -224,36 +315,37 @@ const V = {
             required
           >
 
-          <button class="btn">
+          <button
+            class="btn"
+          >
             Send
           </button>
 
         </form>
 
       </div>
+
     `;
 
-    const form =
-      document.getElementById("chatForm");
 
-    if (form) {
-      form.addEventListener(
+    document
+      .getElementById("chatForm")
+      .addEventListener(
         "submit",
         chat
       );
-    }
+
   },
 
 
-  /* =========================
-     AUTOMATIONS
-  ========================= */
-
   automations() {
 
-    T.textContent = "Automations";
+    T.textContent =
+      "Automations";
+
 
     C.innerHTML = `
+
       <div class="hero">
 
         <div>
@@ -263,7 +355,8 @@ const V = {
           </h2>
 
           <div class="muted">
-            Build repeatable business processes with AI.
+            Build repeatable business
+            processes with AI.
           </div>
 
         </div>
@@ -277,6 +370,7 @@ const V = {
 
       </div>
 
+
       <div class="grid">
 
         ${[
@@ -284,7 +378,7 @@ const V = {
           "EMAIL FOLLOW-UP",
           "SUPPORT TRIAGE",
           "CONTENT ENGINE"
-        ].map((name, index) => `
+        ].map((name,index) => `
 
           <div class="card">
 
@@ -293,7 +387,9 @@ const V = {
             </small>
 
             <div class="metric">
-              ${index === 2 ? "Paused" : "Active"}
+              ${index === 2
+                ? "Paused"
+                : "Active"}
             </div>
 
             <p class="muted">
@@ -306,19 +402,20 @@ const V = {
         `).join("")}
 
       </div>
+
     `;
+
   },
 
 
-  /* =========================
-     ANALYTICS
-  ========================= */
-
   analytics() {
 
-    T.textContent = "Analytics";
+    T.textContent =
+      "Analytics";
+
 
     C.innerHTML = `
+
       <div class="hero">
 
         <div>
@@ -335,13 +432,14 @@ const V = {
 
       </div>
 
+
       <div class="grid">
 
         ${[
-          ["LEAD VALUE", "$18.4K"],
-          ["RESPONSE TIME", "2.4m"],
-          ["AI RESOLUTION", "74%"],
-          ["AUTOMATION SAVINGS", "31h"]
+          ["LEAD VALUE","$18.4K"],
+          ["RESPONSE TIME","2.4m"],
+          ["AI RESOLUTION","74%"],
+          ["AUTOMATION SAVINGS","31h"]
         ].map(item => `
 
           <div class="card">
@@ -363,7 +461,9 @@ const V = {
         `).join("")}
 
       </div>
+
     `;
+
   }
 
 };
@@ -376,24 +476,57 @@ const V = {
 function show(page) {
 
   document
-    .querySelectorAll("aside button")
+    .querySelectorAll(".nav-button")
     .forEach(button => {
 
-      button.style.background =
+      if (
         button.dataset.page === page
-          ? "var(--p)"
-          : "transparent";
+      ) {
+
+        button.style.background =
+          "rgba(118,84,255,.25)";
+
+        button.style.color =
+          "white";
+
+      } else {
+
+        button.style.background =
+          "transparent";
+
+        button.style.color =
+          "";
+
+      }
 
     });
 
+
   if (V[page]) {
+
     V[page]();
+
   }
+
+
+  const sidebar =
+    document.getElementById(
+      "sidebar"
+    );
+
+  if (sidebar) {
+
+    sidebar.classList.remove(
+      "mobile-open"
+    );
+
+  }
+
 }
 
 
 /* =========================
-   GET LEADS
+   LOAD LEADS
 ========================= */
 
 async function loadLeads() {
@@ -405,21 +538,17 @@ async function loadLeads() {
     return;
   }
 
-  table.innerHTML = `
-    <div class="muted">
-      Loading leads...
-    </div>
-  `;
 
   try {
 
     const response =
       await fetch(
-        `${API}/leads`,
+        "/api/leads",
         {
           cache: "no-store"
         }
       );
+
 
     if (!response.ok) {
 
@@ -429,13 +558,16 @@ async function loadLeads() {
 
     }
 
+
     const leads =
       await response.json();
 
+
     console.log(
-      "AIFlow PostgreSQL Leads:",
+      "AIFlow Leads:",
       leads
     );
+
 
     if (
       !Array.isArray(leads) ||
@@ -443,14 +575,13 @@ async function loadLeads() {
     ) {
 
       table.innerHTML = `
-        <div class="card">
-          <div class="muted">
-            No leads found.
-          </div>
+        <div class="muted">
+          No leads found.
         </div>
       `;
 
       return;
+
     }
 
 
@@ -464,33 +595,25 @@ async function loadLeads() {
 
             <tr>
 
-              <th>
-                Name
-              </th>
+              <th>Name</th>
 
-              <th>
-                Email
-              </th>
+              <th>Email</th>
 
-              <th>
-                Status
-              </th>
+              <th>Status</th>
 
-              <th>
-                Source
-              </th>
+              <th>Source</th>
 
-              <th>
-                Created
-              </th>
+              <th>Created</th>
 
             </tr>
 
           </thead>
 
+
           <tbody>
 
-            ${leads.map(lead => `
+            ${leads.map(
+              lead => `
 
               <tr>
 
@@ -528,7 +651,8 @@ async function loadLeads() {
 
               </tr>
 
-            `).join("")}
+            `
+            ).join("")}
 
           </tbody>
 
@@ -538,31 +662,23 @@ async function loadLeads() {
 
     `;
 
+
   } catch (error) {
 
     console.error(
-      "AIFlow Leads Error:",
+      "Leads error:",
       error
     );
 
+
     table.innerHTML = `
-
-      <div class="card">
-
-        <div
-          style="color:#ff7b7b"
-        >
-          Unable to load leads.
-        </div>
-
-        <div class="muted">
-          Please refresh the page.
-        </div>
-
+      <div style="color:#ff7b7b">
+        Unable to load leads.
       </div>
-
     `;
+
   }
+
 }
 
 
@@ -581,36 +697,34 @@ async function loadLeadMetric() {
     return;
   }
 
+
   try {
 
     const response =
       await fetch(
-        `${API}/leads`,
+        "/api/leads",
         {
           cache: "no-store"
         }
       );
 
-    if (!response.ok) {
-      throw new Error(
-        "Lead API unavailable"
-      );
-    }
 
     const leads =
       await response.json();
+
 
     metric.textContent =
       Array.isArray(leads)
         ? leads.length
         : 0;
 
-  } catch (error) {
 
-    console.error(error);
+  } catch {
 
     metric.textContent = "—";
+
   }
+
 }
 
 
@@ -622,48 +736,39 @@ async function addLead(event) {
 
   event.preventDefault();
 
-  const nameInput =
-    document.getElementById("ln");
 
-  const emailInput =
-    document.getElementById("le");
+  const name =
+    document
+      .getElementById("ln")
+      .value
+      .trim();
+
+
+  const email =
+    document
+      .getElementById("le")
+      .value
+      .trim();
+
 
   const message =
     document.getElementById(
       "leadMessage"
     );
 
-  const name =
-    nameInput.value.trim();
-
-  const email =
-    emailInput.value.trim();
-
-
-  if (!name || !email) {
-
-    message.innerHTML = `
-      <div style="color:#ff7b7b">
-        Please enter name and email.
-      </div>
-    `;
-
-    return;
-  }
-
-
-  message.innerHTML = `
-    <div class="muted">
-      Saving lead...
-    </div>
-  `;
-
 
   try {
 
+    message.innerHTML = `
+      <div class="muted">
+        Saving...
+      </div>
+    `;
+
+
     const response =
       await fetch(
-        `${API}/leads`,
+        "/api/leads",
         {
           method: "POST",
 
@@ -712,33 +817,33 @@ async function addLead(event) {
 
   } catch (error) {
 
-    console.error(
-      "Create lead error:",
-      error
-    );
-
     message.innerHTML = `
       <div style="color:#ff7b7b">
         ${esc(error.message)}
       </div>
     `;
+
   }
+
 }
 
 
 /* =========================
-   AI CHAT
+   CHAT
 ========================= */
 
 async function chat(event) {
 
   event.preventDefault();
 
+
   const input =
     document.getElementById("ci");
 
+
   const box =
     document.getElementById("msgs");
+
 
   const message =
     input.value.trim();
@@ -750,39 +855,30 @@ async function chat(event) {
 
 
   box.innerHTML += `
-
     <div class="msg user">
       ${esc(message)}
     </div>
-
   `;
 
 
   input.value = "";
 
 
-  const typing =
-    document.createElement("div");
-
-  typing.className = "msg";
-
-  typing.id = "aiTyping";
-
-  typing.textContent =
-    "AI is thinking...";
-
-  box.appendChild(typing);
-
-
-  box.scrollTop =
-    box.scrollHeight;
+  box.innerHTML += `
+    <div
+      class="msg"
+      id="typing"
+    >
+      AI is thinking...
+    </div>
+  `;
 
 
   try {
 
     const response =
       await fetch(
-        `${API}/chat`,
+        "/api/chat",
         {
           method: "POST",
 
@@ -802,48 +898,44 @@ async function chat(event) {
       await response.json();
 
 
-    const typingElement =
+    const typing =
       document.getElementById(
-        "aiTyping"
+        "typing"
       );
 
-    if (typingElement) {
-      typingElement.remove();
+
+    if (typing) {
+      typing.remove();
     }
 
 
-    const reply =
-      data.reply ||
-      "No AI response received.";
-
-
     box.innerHTML += `
-
       <div class="msg">
-        ${esc(reply)}
+        ${esc(
+          data.reply ||
+          "No response"
+        )}
       </div>
-
     `;
 
 
-  } catch (error) {
+  } catch {
 
-    const typingElement =
+    const typing =
       document.getElementById(
-        "aiTyping"
+        "typing"
       );
 
-    if (typingElement) {
-      typingElement.remove();
+
+    if (typing) {
+      typing.remove();
     }
 
 
     box.innerHTML += `
-
       <div class="msg">
-        AI service temporarily unavailable.
+        AI service unavailable.
       </div>
-
     `;
 
   }
@@ -851,11 +943,12 @@ async function chat(event) {
 
   box.scrollTop =
     box.scrollHeight;
+
 }
 
 
 /* =========================
-   DATE FORMAT
+   HELPERS
 ========================= */
 
 function formatDate(date) {
@@ -864,57 +957,82 @@ function formatDate(date) {
     return "—";
   }
 
-  try {
 
-    return new Date(date)
-      .toLocaleDateString(
-        "en-US",
-        {
-          year: "numeric",
-          month: "short",
-          day: "numeric"
-        }
-      );
+  return new Date(date)
+    .toLocaleDateString(
+      "en-US",
+      {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+      }
+    );
 
-  } catch {
-
-    return "—";
-
-  }
 }
 
-
-/* =========================
-   SECURITY
-========================= */
 
 function esc(value) {
 
-  return String(value ?? "")
-    .replace(
-      /[&<>"']/g,
-      character => {
+  return String(
+    value ?? ""
+  ).replace(
+    /[&<>"']/g,
+    char => {
 
-        const map = {
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#039;"
-        };
+      const map = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      };
 
-        return map[character];
-      }
-    );
+      return map[char];
+
+    }
+  );
+
 }
 
 
 /* =========================
-   SIDEBAR BUTTONS
+   MOBILE MENU
+========================= */
+
+const mobileMenu =
+  document.getElementById(
+    "mobileMenu"
+  );
+
+
+const sidebar =
+  document.getElementById(
+    "sidebar"
+  );
+
+
+if (mobileMenu && sidebar) {
+
+  mobileMenu.addEventListener(
+    "click",
+    () => {
+
+      sidebar.classList.toggle(
+        "mobile-open"
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================
+   NAV BUTTONS
 ========================= */
 
 document
-  .querySelectorAll("aside button")
+  .querySelectorAll(".nav-button")
   .forEach(button => {
 
     button.addEventListener(
@@ -932,7 +1050,7 @@ document
 
 
 /* =========================
-   START APPLICATION
+   START
 ========================= */
 
 show("overview");
