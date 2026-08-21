@@ -99,11 +99,3 @@ The buyer may use and customize the software according to the license terms prov
 Support
 For installation, deployment and customization support, contact the seller through the platform where the product was purchased.
 
-### ثم في GitHub
-
-**Add file → Create new file**
-
-اسم الملف:
-
-```text
-README.md
