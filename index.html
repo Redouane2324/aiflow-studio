@@ -52,9 +52,7 @@
         <form id="loginForm">
 
           <div class="field">
-            <label for="loginEmail">
-              Email
-            </label>
+            <label for="loginEmail">Email</label>
 
             <input
               id="loginEmail"
@@ -66,9 +64,7 @@
           </div>
 
           <div class="field">
-            <label for="loginPassword">
-              Password
-            </label>
+            <label for="loginPassword">Password</label>
 
             <input
               id="loginPassword"
@@ -93,6 +89,8 @@
           <span
             id="showRegister"
             class="link"
+            role="button"
+            tabindex="0"
           >
             Create one
           </span>
@@ -130,11 +128,11 @@
               placeholder="John Doe"
               autocomplete="name"
               minlength="2"
+              maxlength="100"
               required
             >
 
           </div>
-
 
           <div class="field">
 
@@ -147,11 +145,11 @@
               type="email"
               placeholder="you@example.com"
               autocomplete="email"
+              maxlength="255"
               required
             >
 
           </div>
-
 
           <div class="field">
 
@@ -165,11 +163,11 @@
               placeholder="Minimum 8 characters"
               autocomplete="new-password"
               minlength="8"
+              maxlength="128"
               required
             >
 
           </div>
-
 
           <button
             type="submit"
@@ -180,7 +178,6 @@
 
         </form>
 
-
         <div class="auth-switch">
 
           Already have an account?
@@ -188,6 +185,8 @@
           <span
             id="showLogin"
             class="link"
+            role="button"
+            tabindex="0"
           >
             Sign in
           </span>
@@ -218,8 +217,10 @@
         AI<span>Flow</span> Studio
       </div>
 
-
-      <nav class="nav">
+      <nav
+        class="nav"
+        aria-label="Main navigation"
+      >
 
         <button
           type="button"
@@ -229,7 +230,6 @@
           Dashboard
         </button>
 
-
         <button
           type="button"
           class="nav-btn"
@@ -238,7 +238,6 @@
           Leads
         </button>
 
-
         <button
           type="button"
           class="nav-btn"
@@ -246,7 +245,6 @@
         >
           Analytics
         </button>
-
 
         <button
           type="button"
@@ -257,7 +255,6 @@
         </button>
 
       </nav>
-
 
       <div class="sidebar-bottom">
 
@@ -298,7 +295,6 @@
 
       <div class="content">
 
-
         <!-- =========================
              DASHBOARD
         ========================== -->
@@ -319,7 +315,6 @@
 
             </div>
 
-
             <button
               type="button"
               class="btn btn-primary"
@@ -334,7 +329,6 @@
           <!-- STATISTICS -->
 
           <div class="stats">
-
 
             <div class="stat">
 
@@ -443,7 +437,6 @@
 
             </div>
 
-
             <button
               type="button"
               class="btn btn-primary"
@@ -457,16 +450,14 @@
 
           <div class="card">
 
-            <!-- TOOLBAR -->
-
             <div class="toolbar">
 
               <input
                 id="searchInput"
                 type="search"
                 placeholder="Search leads..."
+                autocomplete="off"
               >
-
 
               <select id="statusFilter">
 
@@ -499,8 +490,6 @@
             </div>
 
 
-            <!-- TABLE -->
-
             <div class="table-wrap">
 
               <table>
@@ -509,34 +498,21 @@
 
                   <tr>
 
-                    <th>
-                      Name
-                    </th>
+                    <th>Name</th>
 
-                    <th>
-                      Company
-                    </th>
+                    <th>Company</th>
 
-                    <th>
-                      Email
-                    </th>
+                    <th>Email</th>
 
-                    <th>
-                      Status
-                    </th>
+                    <th>Status</th>
 
-                    <th>
-                      Value
-                    </th>
+                    <th>Value</th>
 
-                    <th>
-                      Actions
-                    </th>
+                    <th>Actions</th>
 
                   </tr>
 
                 </thead>
-
 
                 <tbody id="leadsTable"></tbody>
 
@@ -576,7 +552,6 @@
 
 
           <div class="stats">
-
 
             <div class="stat">
 
@@ -747,10 +722,12 @@
   <div
     id="leadModal"
     class="modal hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalTitle"
   >
 
     <div class="modal-card">
-
 
       <div class="modal-header">
 
@@ -783,7 +760,6 @@
 
         <div class="form-grid">
 
-
           <div class="field">
 
             <label for="leadName">
@@ -792,7 +768,9 @@
 
             <input
               id="leadName"
+              type="text"
               placeholder="John Smith"
+              maxlength="150"
               required
             >
 
@@ -809,6 +787,7 @@
               id="leadEmail"
               type="email"
               placeholder="john@example.com"
+              maxlength="255"
             >
 
           </div>
@@ -822,7 +801,9 @@
 
             <input
               id="leadPhone"
+              type="tel"
               placeholder="+1 555 123 456"
+              maxlength="50"
             >
 
           </div>
@@ -836,7 +817,9 @@
 
             <input
               id="leadCompany"
+              type="text"
               placeholder="Company name"
+              maxlength="150"
             >
 
           </div>
@@ -850,7 +833,9 @@
 
             <input
               id="leadSource"
+              type="text"
               placeholder="Website, Facebook, Referral..."
+              maxlength="100"
             >
 
           </div>
@@ -954,4 +939,4 @@
   <script src="app.js"></script>
 
 </body>
-  </html>
+</html>
