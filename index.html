@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="AIFlow Studio - Simple AI-powered CRM and lead management platform."
+  >
+
+  <title>AIFlow Studio</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .auth-page {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(
+          circle at top left,
+          #e8edff,
+          transparent 35%
+        ),
+        #f5f7fb;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 430px;
+      background: white;
+      border-radius: 20px;
+      padding: 34px;
+      box-shadow: 0 20px 60px rgba(20, 30, 60, .10);
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -.8px;
+    }
+
+    .logo span {
+      color: #635bff;
+    }
+
+    .auth-card h1 {
+      margin-top: 28px;
+      font-size: 28px;
+    }
+
+    .muted {
+      color: #718096;
+    }
+
+    .auth-card .muted {
+      margin: 8px 0 25px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 14px;
+      font-weight: 650;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid #dce1ea;
+      border-radius: 10px;
+      padding: 12px 13px;
+      outline: none;
+      background: white;
+      color: #172033;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #635bff;
+      box-shadow: 0 0 0 3px rgba(99, 91, 255, .10);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 17px;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .btn-primary {
+      background: #635bff;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #5149e8;
+    }
+
+    .btn-secondary {
+      background: #eef0f5;
+      color: #263043;
+    }
+
+    .btn-danger {
+      background: #ffe9e9;
+      color: #c62828;
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    .auth-switch {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .link {
+      color: #635bff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .error,
+    .success {
+      padding: 11px 13px;
+      border-radius: 9px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    .error {
+      background: #fff0f0;
+      color: #c62828;
+    }
+
+    .success {
+      background: #eafaf0;
+      color: #167343;
+    }
+
+    /* APP */
+
+    .app-layout {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+    }
+
+    .sidebar {
+      background: #111827;
+      color: white;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar .logo {
+      padding: 0 10px 30px;
+    }
+
+    .sidebar .logo span {
+      color: #8d87ff;
+    }
+
+    .nav {
+      display: grid;
+      gap: 6px;
+    }
+
+    .nav button {
+      border: 0;
+      background: transparent;
+      color: #aeb6c7;
+      text-align: left;
+      padding: 12px;
+      border-radius: 9px;
+    }
+
+    .nav button:hover,
+    .nav button.active {
+      background: #222b3c;
+      color: white;
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+    }
+
+    .main {
+      min-width: 0;
+    }
+
+    .topbar {
+      height: 70px;
+      background: white;
+      border-bottom: 1px solid #e7eaf0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+    }
+
+    .user-name {
+      font-weight: 700;
+    }
+
+    .content {
+      padding: 28px;
+      max-width: 1400px;
+      margin: auto;
+    }
+
+    .page-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 24px;
+    }
+
+    .page-title h1 {
+      font-size: 28px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 25px;
+    }
+
+    .stat {
+      background: white;
+      border: 1px solid #e8ebf1;
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .stat-label {
+      color: #758096;
+      font-size: 14px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 800;
+      margin-top: 7px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e8ebf1;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .toolbar input {
+      max-width: 320px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 750px;
+    }
+
+    th,
+    td {
+      padding: 13px 10px;
+      border-bottom: 1px solid #edf0f4;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      color: #69758a;
+      font-weight: 700;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #eef0f5;
+    }
+
+    .badge.won {
+      background: #e8f8ee;
+      color: #167343;
+    }
+
+    .badge.lost {
+      background: #fff0f0;
+      color: #c62828;
+    }
+
+    .badge.qualified {
+      background: #eeeaff;
+      color: #5149e8;
+    }
+
+    .actions {
+      display: flex;
+      gap: 7px;
+    }
+
+    .actions button {
+      border: 0;
+      border-radius: 7px;
+      padding: 7px 9px;
+    }
+
+    .empty {
+      text-align: center;
+      color: #7a8496;
+      padding: 40px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 12, 22, .55);
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      z-index: 100;
+    }
+
+    .modal-card {
+      background: white;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 16px;
+      padding: 25px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .close {
+      border: 0;
+      background: transparent;
+      font-size: 25px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .form-grid .full {
+      grid-column: 1 / -1;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .profile-box {
+      max-width: 650px;
+    }
+
+    @media (max-width: 900px) {
+      .app-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .content {
+        padding: 17px;
+      }
+
+      .topbar {
+        padding: 0 17px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .page-title {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .toolbar {
+        flex-direction: column;
+      }
+
+      .toolbar input {
+        max-width: none;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid .full {
+        grid-column: auto;
+      }
+
+      .auth-card {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- AUTH -->
+
+  <section id="authPage" class="auth-page">
+
+    <div class="auth-card">
+
+      <div class="logo">
+        AI<span>Flow</span> Studio
+      </div>
+
+      <div id="loginBox">
+
+        <h1>Welcome back</h1>
+
+        <p class="muted">
+          Sign in to manage your leads.
+        </p>
+
+        <div id="loginMessage"></div>
+
+        <form id="loginForm">
+
+          <div class="field">
+            <label>Email</label>
+            <input
+              id="loginEmail"
+              type="email"
+              required
+              autocomplete="email"
+            >
+          </div>
+
+          <div class="field">
+            <label>Password</label>
+            <input
+              id="loginPassword"
+              type="password"
+              required
+              autocomplete="current-password"
+            >
+          </div>
+
+          <button class="btn btn-primary btn-full">
+            Sign in
+          </button>
+
+        </form>
+
+        <div class="auth-switch">
+          Don't have an account?
+          <span class="link" id="showRegister">
+            Create one
+          </span>
+        </div>
+
+      </div>
+
+      <div id="registerBox" class="hidden">
+
+        <h1>Create your account</h1>
+
+        <p class="muted">
+          Start managing your leads with AIFlow Studio.
+        </p>
+
+        <div id="registerMessage"></div>
+
+        <form id="registerForm">
+
+          <div class="field">
+            <label>Name</label>
+            <input
+              id="registerName"
+              type="text"
+              required
+              minlength="2"
+              autocomplete="name"
+            >
+          </div>
+
+          <div class="field">
+            <label>Email</label>
+            <input
+              id="registerEmail"
+              type="email"
+              required
+              autocomplete="email"
+            >
+          </div>
+
+          <div class="field">
+            <label>Password</label>
+            <input
+              id="registerPassword"
+              type="password"
+              required
+              minlength="8"
+              autocomplete="new-password"
+            >
+          </div>
+
+          <button class="btn btn-primary btn-full">
+            Create account
+          </button>
+
+        </form>
+
+        <div class="auth-switch">
+          Already have an account?
+          <span class="link" id="showLogin">
+            Sign in
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- APPLICATION -->
+
+  <section id="appPage" class="app-layout hidden">
+
+    <aside class="sidebar">
+
+      <div class="logo">
+        AI<span>Flow</span>
+      </div>
+
+      <nav class="nav">
+
+        <button
+          class="nav-btn active"
+          data-page="dashboard"
+        >
+          Dashboard
+        </button>
+
+        <button
+          class="nav-btn"
+          data-page="leads"
+        >
+          Leads
+        </button>
+
+        <button
+          class="nav-btn"
+          data-page="analytics"
+        >
+          Analytics
+        </button>
+
+        <button
+          class="nav-btn"
+          data-page="profile"
+        >
+          Profile
+        </button>
+
+      </nav>
+
+      <div class="sidebar-bottom">
+
+        <button
+          id="logoutBtn"
+          class="btn btn-secondary btn-full"
+        >
+          Logout
+        </button>
+
+      </div>
+
+    </aside>
+
+
+    <main class="main">
+
+      <header class="topbar">
+
+        <strong id="topTitle">
+          Dashboard
+        </strong>
+
+        <span
+          id="userName"
+          class="user-name"
+        ></span>
+
+      </header>
+
+
+      <div class="content">
+
+        <!-- DASHBOARD -->
+
+        <section id="dashboardPage">
+
+          <div class="page-title">
+
+            <div>
+              <h1>Dashboard</h1>
+              <p class="muted">
+                Overview of your sales pipeline.
+              </p>
+            </div>
+
+            <button
+              class="btn btn-primary"
+              id="dashboardAddLead"
+            >
+              + Add Lead
+            </button>
+
+          </div>
+
+          <div class="stats">
+
+            <div class="stat">
+              <div class="stat-label">
+                Total Leads
+              </div>
+              <div
+                id="statTotal"
+                class="stat-value"
+              >
+                0
+              </div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">
+                New
+              </div>
+              <div
+                id="statNew"
+                class="stat-value"
+              >
+                0
+              </div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">
+                Qualified
+              </div>
+              <div
+                id="statQualified"
+                class="stat-value"
+              >
+                0
+              </div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">
+                Won Value
+              </div>
+              <div
+                id="statWon"
+                class="stat-value"
+              >
+                $0
+              </div>
+            </div>
+
+          </div>
+
+          <div class="card">
+
+            <h2>Recent Leads</h2>
+
+            <div
+              id="recentLeads"
+              style="margin-top:15px"
+            ></div>
+
+          </div>
+
+        </section>
+
+
+        <!-- LEADS -->
+
+        <section
+          id="leadsPage"
+          class="hidden"
+        >
+
+          <div class="page-title">
+
+            <div>
+              <h1>Leads</h1>
+              <p class="muted">
+                Manage your customers and prospects.
+              </p>
+            </div>
+
+            <button
+              class="btn btn-primary"
+              id="addLeadBtn"
+            >
+              + Add Lead
+            </button>
+
+          </div>
+
+          <div class="card">
+
+            <div class="toolbar">
+
+              <input
+                id="searchInput"
+                type="search"
+                placeholder="Search leads..."
+              >
+
+              <select id="statusFilter">
+
+                <option value="">
+                  All statuses
+                </option>
+
+                <option value="new">
+                  New
+                </option>
+
+                <option value="contacted">
+                  Contacted
+                </option>
+
+                <option value="qualified">
+                  Qualified
+                </option>
+
+                <option value="won">
+                  Won
+                </option>
+
+                <option value="lost">
+                  Lost
+                </option>
+
+              </select>
+
+            </div>
+
+            <div class="table-wrap">
+
+              <table>
+
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Company</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Value</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody id="leadsTable"></tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ANALYTICS -->
+
+        <section
+          id="analyticsPage"
+          class="hidden"
+        >
+
+          <div class="page-title">
+
+            <div>
+              <h1>Analytics</h1>
+              <p class="muted">
+                Understand your sales pipeline.
+              </p>
+            </div>
+
+          </div>
+
+          <div class="stats">
+
+            <div class="stat">
+              <div class="stat-label">
+                Contacted
+              </div>
+              <div
+                id="analyticsContacted"
+                class="stat-value"
+              >
+                0
+              </div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">
+                Qualified
+              </div>
+              <div
+                id="analyticsQualified"
+                class="stat-value"
+              >
+                0
+              </div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">
+                Won
+              </div>
+              <div
+                id="analyticsWon"
+                class="stat-value"
+              >
+                0
+              </div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">
+                Pipeline Value
+              </div>
+              <div
+                id="analyticsValue"
+                class="stat-value"
+              >
+                $0
+              </div>
+            </div>
+
+          </div>
+
+          <div class="card">
+
+            <h2>Pipeline</h2>
+
+            <div
+              id="pipeline"
+              style="margin-top:20px"
+            ></div>
+
+          </div>
+
+        </section>
+
+
+        <!-- PROFILE -->
+
+        <section
+          id="profilePage"
+          class="hidden"
+        >
+
+          <div class="page-title">
+
+            <div>
+              <h1>Profile</h1>
+              <p class="muted">
+                Your account information.
+              </p>
+            </div>
+
+          </div>
+
+          <div class="card profile-box">
+
+            <div class="field">
+              <label>Name</label>
+              <input id="profileName" readonly>
+            </div>
+
+            <div class="field">
+              <label>Email</label>
+              <input id="profileEmail" readonly>
+            </div>
+
+            <div class="field">
+              <label>Account created</label>
+              <input id="profileCreated" readonly>
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+
+    </main>
+
+  </section>
+
+
+  <!-- LEAD MODAL -->
+
+  <div
+    id="leadModal"
+    class="modal hidden"
+  >
+
+    <div class="modal-card">
+
+      <div class="modal-header">
+
+        <h2 id="modalTitle">
+          Add Lead
+        </h2>
+
+        <button
+          class="close"
+          id="closeModal"
+        >
+          ×
+        </button>
+
+      </div>
+
+      <div id="leadMessage"></div>
+
+      <form id="leadForm">
+
+        <input
+          id="leadId"
+          type="hidden"
+        >
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label>Name *</label>
+            <input id="leadName" required>
+          </div>
+
+          <div class="field">
+            <label>Email</label>
+            <input id="leadEmail" type="email">
+          </div>
+
+          <div class="field">
+            <label>Phone</label>
+            <input id="leadPhone">
+          </div>
+
+          <div class="field">
+            <label>Company</label>
+            <input id="leadCompany">
+          </div>
+
+          <div class="field">
+            <label>Source</label>
+            <input
+              id="leadSource"
+              placeholder="Website, Facebook, Referral..."
+            >
+          </div>
+
+          <div class="field">
+            <label>Status</label>
+
+            <select id="leadStatus">
+
+              <option value="new">
+                New
+              </option>
+
+              <option value="contacted">
+                Contacted
+              </option>
+
+              <option value="qualified">
+                Qualified
+              </option>
+
+              <option value="won">
+                Won
+              </option>
+
+              <option value="lost">
+                Lost
+              </option>
+
+            </select>
+
+          </div>
+
+          <div class="field">
+            <label>Value ($)</label>
+            <input
+              id="leadValue"
+              type="number"
+              min="0"
+              step="0.01"
+              value="0"
+            >
+          </div>
+
+          <div class="field full">
+            <label>Notes</label>
+            <textarea id="leadNotes"></textarea>
+          </div>
+
+        </div>
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            class="btn btn-secondary"
+            id="cancelLead"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+          >
+            Save Lead
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+
+</body>
+</html>
